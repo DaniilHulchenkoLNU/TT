@@ -10,16 +10,16 @@ namespace Service
 {
     public class EmployeeService
     {
-        //private readonly iBaseRepository<Employee> _db;
-        //public EmployeeService(iBaseRepository<Employee> db)
-        //{
-        //    _db = db;
-        //}
+        private readonly iBaseRepository<Employee> _db;
+        public EmployeeService(iBaseRepository<Employee> db)
+        {
+            _db = db;
+        }
 
-        //public async Task<Employee> Test ()
-        //{
-        //    return (await _db.GetAll()).First();
-        //}
+        public async Task<Employee> Test()
+        {
+            return (await _db.GetAll()).First();
+        }
 
     }
 }

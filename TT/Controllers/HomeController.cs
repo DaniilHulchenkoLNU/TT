@@ -19,7 +19,7 @@ namespace TT.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //Employee data = await employeeService.Test();
+            Employee data = await employeeService.Test();
             return View();
         }
 

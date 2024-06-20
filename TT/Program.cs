@@ -31,4 +31,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+ExtensionsApp.AddMyAppExtensions(app);
+
 app.Run();
