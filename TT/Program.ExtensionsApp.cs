@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entity;
+using Microsoft.EntityFrameworkCore;
 using Service;
 using TT.DAL;
 using TT.DAL.Interfaces;
@@ -13,6 +14,8 @@ namespace TT
 
             app.UseAuthentication(); 
             app.UseAuthorization();
+
+            
         }
 
     }

@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-//using WWW.Domain.Entity;
-//using WWW.DAL;
 using System.Data;
 using System.Text;
 using System.Security.Cryptography;
 using Castle.Core.Configuration;
 using Domain.Entity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace TT.DAL {
     public class ApplicationDbContext : DbContext
@@ -38,6 +37,11 @@ namespace TT.DAL {
                 .HasForeignKey(e => e.PeoplePartnerId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Employee>()
+                .HasOne(e => e.Role)
+                .WithMany()
+                .HasForeignKey(e => e.RoleId);
+
             modelBuilder.Entity<LeaveRequest>()
                 .HasOne(lr => lr.Employee)
                 .WithMany(e => e.LeaveRequests)
@@ -61,10 +65,38 @@ namespace TT.DAL {
                 .WithOne(e => e.UserInfo)
                 .HasForeignKey<Employee>(e => e.UserInfoId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            //modelBuilder.Entity<UserInfo>(b =>
+            //{
+            //    b.HasMany(e => e.Claims)
+            //     .WithOne()
+            //     .HasForeignKey(uc => uc.UserId)
+            //     .IsRequired();
+
+            //    b.HasMany(e => e.Logins)
+            //     .WithOne()
+            //     .HasForeignKey(ul => ul.UserId)
+            //     .IsRequired();
+
+            //    b.HasMany(e => e.Tokens)
+            //     .WithOne()
+            //     .HasForeignKey(ut => ut.UserId)
+            //     .IsRequired();
+
+            //    b.HasMany(e => e.UserRoles)
+            //     .WithOne()
+            //     .HasForeignKey(ur => ur.UserId)
+            //     .IsRequired();
+            //});
+
+            //modelBuilder.Entity<IdentityUserLogin<string>>().HasKey(l => new { l.LoginProvider, l.ProviderKey });
+            //modelBuilder.Entity<IdentityUserRole<string>>().HasKey(r => new { r.UserId, r.RoleId });
+            //modelBuilder.Entity<IdentityUserToken<string>>().HasKey(t => new { t.UserId, t.LoginProvider, t.Name });
             SeedData(modelBuilder);
+
         }
 
-        private void SeedData(ModelBuilder modelBuilder)
+        public void SeedData(ModelBuilder modelBuilder)
         {
             // UserInfo data
             var user1 = new UserInfo
@@ -80,45 +112,18 @@ namespace TT.DAL {
                 LockoutEnabled = true,
             };
 
-            var user2 = new UserInfo
+            var user3 = new UserInfo
             {
                 Id = "2",
-                UserName = "jane.doe",
-                Email = "jane.doe@example.com",
+                UserName = "alex.smith",
+                Email = "alex.smith@example.com",
                 EmailConfirmed = true,
-                PasswordHash = "AQAAAAEAACcQAAAAEJXrQbU/JB7Z4VLZMQ0pMflTeC1xB5DHzGxeL0O+flZ5g4rHkX5TRg==",
-                SecurityStamp = "2SYI8S5DZGPMZ5MN4NXQ4KOB4HCEAQ6Z",
-                ConcurrencyStamp = "6ae6fe15-15b8-4c5b-9e0c-6751b6c6d8f1",
-                PhoneNumber = "0987654321",
+                PasswordHash = "AQAAAAEAACcQAAAAEIJJR3+K7G9QXmJH5Nl5G5RZ0o1a+uzt4ToOeZ1dr6iST4lbk4Fomg==",
+                SecurityStamp = "ABSJ6Z5DZGPMZ5MN4NXQ4KOB4HCEAQ6Z",
+                ConcurrencyStamp = "8be6fe15-15b8-4c5b-9e0c-6751b6c6d8f1",
+                PhoneNumber = "1231231234",
                 LockoutEnabled = true,
             };
-
-            // Employee data
-            var employee1 = new Employee
-            {
-                Id = 1,
-                UserInfoId = user1.Id,
-                FullName = "John Doe",
-                Subdivision = "IT",
-                Position = "Developer",
-                Status = "Active",
-                OutOfOfficeBalance = 10,
-                Photo = "photo_url_1",
-            };
-
-            var employee2 = new Employee
-            {
-                Id = 2,
-                UserInfoId = user2.Id,
-                FullName = "Jane Doe",
-                Subdivision = "HR",
-                Position = "Manager",
-                Status = "Active",
-                OutOfOfficeBalance = 8,
-                Photo = "photo_url_2",
-                PeoplePartnerId = 1, // Assuming Jane's people partner is John
-            };
-
             // Role data
             var role1 = new Role
             {
@@ -133,6 +138,34 @@ namespace TT.DAL {
                 RoleName = "User",
                 Description = "Regular user role with limited permissions"
             };
+
+            // Employee data
+            var employee1 = new Employee
+            {
+                Id = 1,
+                UserInfoId = user1.Id,
+                //FullName = "John Doe",
+                Subdivision = "IT",
+                Position = "Developer",
+                Status = "Active",
+                OutOfOfficeBalance = 10,
+                Photo = "photo_url_1",
+                RoleId = role2.Id
+            };
+
+            var employee3 = new Employee
+            {
+                Id = 2,
+                UserInfoId = user3.Id,
+                //FullName = "Alex Smith",
+                Subdivision = "Marketing",
+                Position = "Analyst",
+                Status = "Active",
+                OutOfOfficeBalance = 5,
+                Photo = "photo_url_3",
+                RoleId = role2.Id
+            };
+
 
             // Permission data
             var permission1 = new Permission
@@ -212,8 +245,16 @@ namespace TT.DAL {
                 Comment = "Project B description",
             };
 
-            modelBuilder.Entity<UserInfo>().HasData(user1, user2);
-            modelBuilder.Entity<Employee>().HasData(employee1, employee2);
+
+
+
+
+            modelBuilder.Entity<UserInfo>().HasData(user3);
+            modelBuilder.Entity<Employee>().HasData(employee3);
+
+
+            modelBuilder.Entity<UserInfo>().HasData(user1);
+            modelBuilder.Entity<Employee>().HasData(employee1);
             modelBuilder.Entity<Role>().HasData(role1, role2);
             modelBuilder.Entity<Permission>().HasData(permission1, permission2);
             modelBuilder.Entity<LeaveRequest>().HasData(leaveRequest1, leaveRequest2);

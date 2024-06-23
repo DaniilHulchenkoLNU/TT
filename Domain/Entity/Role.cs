@@ -19,6 +19,8 @@ namespace Domain.Entity
         [Required]
         public string Description { get; set; }
 
+        //public virtual List<Employee> Employees { get; set; }
+
         public virtual List<Permission> Permissions { get; set; }
     }
 }

@@ -82,10 +82,6 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<float>("OutOfOfficeBalance")
                         .HasColumnType("real");
 
@@ -99,6 +95,9 @@ namespace DAL.Migrations
                     b.Property<string>("Position")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -116,6 +115,8 @@ namespace DAL.Migrations
 
                     b.HasIndex("PeoplePartnerId");
 
+                    b.HasIndex("RoleId");
+
                     b.HasIndex("UserInfoId")
                         .IsUnique();
 
@@ -124,26 +125,25 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            FullName = "John Doe",
-                            OutOfOfficeBalance = 10f,
-                            Photo = "photo_url_1",
-                            Position = "Developer",
+                            Id = 2,
+                            OutOfOfficeBalance = 5f,
+                            Photo = "photo_url_3",
+                            Position = "Analyst",
+                            RoleId = 2,
                             Status = "Active",
-                            Subdivision = "IT",
-                            UserInfoId = "1"
+                            Subdivision = "Marketing",
+                            UserInfoId = "2"
                         },
                         new
                         {
-                            Id = 2,
-                            FullName = "Jane Doe",
-                            OutOfOfficeBalance = 8f,
-                            PeoplePartnerId = 1,
-                            Photo = "photo_url_2",
-                            Position = "Manager",
+                            Id = 1,
+                            OutOfOfficeBalance = 10f,
+                            Photo = "photo_url_1",
+                            Position = "Developer",
+                            RoleId = 2,
                             Status = "Active",
-                            Subdivision = "HR",
-                            UserInfoId = "2"
+                            Subdivision = "IT",
+                            UserInfoId = "1"
                         });
                 });
 
@@ -189,8 +189,8 @@ namespace DAL.Migrations
                             AbsenceReason = "Vacation",
                             Comment = "Annual vacation",
                             EmployeeId = 1,
-                            EndDate = new DateTime(2024, 6, 29, 12, 17, 55, 399, DateTimeKind.Local).AddTicks(9084),
-                            StartDate = new DateTime(2024, 6, 19, 12, 17, 55, 398, DateTimeKind.Local).AddTicks(806),
+                            EndDate = new DateTime(2024, 7, 3, 2, 52, 42, 323, DateTimeKind.Local).AddTicks(7076),
+                            StartDate = new DateTime(2024, 6, 23, 2, 52, 42, 321, DateTimeKind.Local).AddTicks(4473),
                             Status = "New"
                         },
                         new
@@ -199,8 +199,8 @@ namespace DAL.Migrations
                             AbsenceReason = "Medical",
                             Comment = "Medical leave",
                             EmployeeId = 2,
-                            EndDate = new DateTime(2024, 6, 24, 12, 17, 55, 399, DateTimeKind.Local).AddTicks(9650),
-                            StartDate = new DateTime(2024, 6, 19, 12, 17, 55, 399, DateTimeKind.Local).AddTicks(9644),
+                            EndDate = new DateTime(2024, 6, 28, 2, 52, 42, 323, DateTimeKind.Local).AddTicks(7843),
+                            StartDate = new DateTime(2024, 6, 23, 2, 52, 42, 323, DateTimeKind.Local).AddTicks(7835),
                             Status = "New"
                         });
                 });
@@ -274,20 +274,20 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             Comment = "Project A description",
-                            EndDate = new DateTime(2024, 12, 19, 12, 17, 55, 400, DateTimeKind.Local).AddTicks(743),
+                            EndDate = new DateTime(2024, 12, 23, 2, 52, 42, 323, DateTimeKind.Local).AddTicks(9347),
                             ProjectManagerId = 1,
                             ProjectType = "Internal",
-                            StartDate = new DateTime(2024, 6, 19, 12, 17, 55, 400, DateTimeKind.Local).AddTicks(617),
+                            StartDate = new DateTime(2024, 6, 23, 2, 52, 42, 323, DateTimeKind.Local).AddTicks(9164),
                             Status = "Active"
                         },
                         new
                         {
                             Id = 2,
                             Comment = "Project B description",
-                            EndDate = new DateTime(2024, 9, 19, 12, 17, 55, 400, DateTimeKind.Local).AddTicks(1327),
+                            EndDate = new DateTime(2024, 9, 23, 2, 52, 42, 324, DateTimeKind.Local).AddTicks(205),
                             ProjectManagerId = 2,
                             ProjectType = "External",
-                            StartDate = new DateTime(2024, 6, 19, 12, 17, 55, 400, DateTimeKind.Local).AddTicks(1323),
+                            StartDate = new DateTime(2024, 6, 23, 2, 52, 42, 324, DateTimeKind.Local).AddTicks(200),
                             Status = "Active"
                         });
                 });
@@ -381,6 +381,21 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
+                            Id = "2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "8be6fe15-15b8-4c5b-9e0c-6751b6c6d8f1",
+                            Email = "alex.smith@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = true,
+                            PasswordHash = "AQAAAAEAACcQAAAAEIJJR3+K7G9QXmJH5Nl5G5RZ0o1a+uzt4ToOeZ1dr6iST4lbk4Fomg==",
+                            PhoneNumber = "1231231234",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ABSJ6Z5DZGPMZ5MN4NXQ4KOB4HCEAQ6Z",
+                            TwoFactorEnabled = false,
+                            UserName = "alex.smith"
+                        },
+                        new
+                        {
                             Id = "1",
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "9ae6fe15-15b8-4c5b-9e0c-6751b6c6d8f1",
@@ -393,21 +408,6 @@ namespace DAL.Migrations
                             SecurityStamp = "JBSY6Z5DZGPMZ5MN4NXQ4KOB4HCEAQ6Z",
                             TwoFactorEnabled = false,
                             UserName = "john.doe"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "6ae6fe15-15b8-4c5b-9e0c-6751b6c6d8f1",
-                            Email = "jane.doe@example.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = true,
-                            PasswordHash = "AQAAAAEAACcQAAAAEJXrQbU/JB7Z4VLZMQ0pMflTeC1xB5DHzGxeL0O+flZ5g4rHkX5TRg==",
-                            PhoneNumber = "0987654321",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "2SYI8S5DZGPMZ5MN4NXQ4KOB4HCEAQ6Z",
-                            TwoFactorEnabled = false,
-                            UserName = "jane.doe"
                         });
                 });
 
@@ -452,6 +452,12 @@ namespace DAL.Migrations
                         .HasForeignKey("PeoplePartnerId")
                         .OnDelete(DeleteBehavior.NoAction);
 
+                    b.HasOne("Domain.Entity.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entity.UserInfo", "UserInfo")
                         .WithOne("Employee")
                         .HasForeignKey("Domain.Entity.Employee", "UserInfoId")
@@ -459,6 +465,8 @@ namespace DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("PeoplePartner");
+
+                    b.Navigation("Role");
 
                     b.Navigation("UserInfo");
                 });

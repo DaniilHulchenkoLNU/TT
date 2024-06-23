@@ -18,7 +18,7 @@ namespace Service
 
         public async Task<Employee> Test()
         {
-            return (await _db.GetAll()).First();
+            return (await _db.GetAll()).FirstOrDefault();
         }
 
     }

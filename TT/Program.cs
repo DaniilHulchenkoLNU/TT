@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TT;
-using TT.DAL;
+//using TT.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +25,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",

@@ -20,8 +20,6 @@ namespace Domain.Entity
         [ForeignKey("UserInfoId")]
         public virtual UserInfo UserInfo { get; set; }
 
-        [Required]
-        public string FullName { get; set; }
 
         [Required]
         public string Subdivision { get; set; }
@@ -38,6 +36,12 @@ namespace Domain.Entity
         public float OutOfOfficeBalance { get; set; }
 
         public string Photo { get; set; }  // Optional field for photo
+
+
+        public int RoleId { get; set; }
+        [Required]
+        [ForeignKey("RoleId")]
+        public virtual Role Role { get; set; }
 
         [ForeignKey(nameof(PeoplePartnerId))]
         public virtual Employee PeoplePartner { get; set; }
